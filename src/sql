@@ -1,0 +1,436 @@
+drop table if exists custom_user;
+drop table if exists post;
+drop table if exists record;
+drop table if exists first_comment;
+drop table if exists custom_count;
+drop table if exists budget;
+drop table if exists custom_collection;
+drop trigger if exists count_user_trigger;
+
+create table if not exists custom_user(userId int auto_increment primary key, account varchar(20) not null, password varchar(20) not null) charset utf8mb4 collate utf8mb4_bin;
+create table if not exists post(postId int auto_increment primary key, userId int, text text, date varchar(19)) charset utf8mb4 collate utf8mb4_bin;
+create table if not exists record(recordId int auto_increment primary key, userId int, type varchar(2), classify text, amount float, date date, note text) charset utf8mb4 collate utf8mb4_bin;
+create table if not exists first_comment(commentId int auto_increment primary key, userId int, postId int,  text text, date varchar(19)) charset utf8mb4 collate utf8mb4_bin;
+create table if not exists custom_count(userId int primary key, lastClockDate date, continuousClockDayNum int default 0, totalChargeDayNum int default 0, totalChargeNum int default 0) charset utf8mb4 collate utf8mb4_bin;
+create table if not exists budget(userId int, month varchar(7), classify varchar(2), budget float) charset utf8mb4 collate utf8mb4_bin;
+create table if not exists custom_collection(userId int, postId int) charset utf8mb4 collate utf8mb4_bin;
+create trigger count_user_trigger after insert on custom_user for each row insert into custom_count(userId) values (new.userId);
+
+
+INSERT INTO custom_user (account, password) VALUES ('南湖', '123456');
+INSERT INTO custom_user (account, password) VALUES ('听书破', '123');
+INSERT INTO custom_user (account, password) VALUES ('森林-屿麓', '1245');
+INSERT INTO custom_user (account, password) VALUES ('清雨QY', '1245');
+INSERT INTO custom_user (account, password) VALUES ('抓住微光的女子', '1245');
+INSERT INTO custom_user (account, password) VALUES ('洗澡的蚂蚁', '1245');
+INSERT INTO custom_user (account, password) VALUES ('艾芙投资日记', '1245');
+INSERT INTO custom_user (account, password) VALUES ('主席都夸我帅', '1245');
+INSERT INTO custom_user (account, password) VALUES ('萌萌蒙蒙', '1245');
+INSERT INTO custom_user (account, password) VALUES ('liupengli_1990', '1245');
+INSERT INTO custom_user (account, password) VALUES ('夜色如洗', '1245');
+INSERT INTO custom_user (account, password) VALUES ('孤独桥', '1245');
+INSERT INTO custom_user (account, password) VALUES ('南瓜蜀黍', '1245');
+INSERT INTO custom_user (account, password) VALUES ('胡瑞', '1245');
+INSERT INTO custom_user (account, password) VALUES ('旺旺浪味仙', '1245');
+
+INSERT INTO post (userId, text, date) VALUES (1, '2017年下半年的某一天，如往常般刷公众号，偶然间刷到了一篇学习投资理财的文章，继而发现了这个宝藏app。然后就开始了我的记账之旅。﻿
+
+           我在用app之前，从来没有统计过我的钱具体有多少，反正有的用就好了，也从没想过说要存钱什么的。那个时候，对钱吧，并没有什么想法。属于一人吃饱全家不饿，有得用就用，没得用就省着点用。﻿
+
+           我当时看了那篇文章可能忽然就对钱产生了很大的兴趣吧，立即就下载了app，并且将自己所有的钱都整理了一遍，对于当时的我来说，记账让我真的开始关注起金钱来了吧。
+
+           不知道有没有小伙伴觉得，平日里总觉得自己没怎么用钱，生活里也没什么大的开支，但钱好像总是莫名其妙地就没有了。反正我就是这样的感受。而且我也总觉得自己确实没买啥东西呀，钱就这样没了，像不小心丢了一样。﻿
+
+           当我开始接触记账，开始整理我的钱时，我才发现，我平日里乱七八糟放的钱，零零总总加起来也还不少嘛。
+
+           也是记账后，我才发现，原来那些不起眼的小开支，一笔一笔加起来，其实也是一笔不小的钱了。也开始每次看着开支超出自己的想象，就开始想着怎样才能减少开支。', '2020-04-13 10:23:44');
+INSERT INTO post (userId, text, date) VALUES (15, '虽然现在还在家待业，但我去找工作不必很焦虑，不必像以前一样，一辞职待不到一个月就开始捉急，随便找个可以去的公司。而现在，因为通过记账，我攒下了一小笔钱，够我好好去找一个工作了呢。不过呆太久没进账也会焦虑，哈哈。', '2020-04-16 10:27:44');
+INSERT INTO post (userId, text, date) VALUES (2, '记账后，我自己更大的感受是，我开始给自己设定一个存钱的目标了，我开始不乱买买买了。现在买东西前都要想一下是否有必要去买它。想起以前，那可是一发工资就和小伙伴出去逛街，买一堆只穿一两次就压箱底的衣服，或者只看一两天便放在角落里吃灰的小玩意，为什么买，因为觉得便宜呀，一买就停不下来呀。那可是很难刹住车地买呀。', '2020-04-17 10:28:14');
+INSERT INTO post (userId, text, date) VALUES (4, '嗯，也感谢那么多小伙伴在里面分享投资理财的经验，让我知道更多的关于钱的故事。也对钱心生了向往。那么多有钱还努力开拓各种渠道生钱的小伙伴，真的让我这懒货很惭愧呀。', '2020-04-18 11:27:44');
+INSERT INTO post (userId, text, date) VALUES (10, '2017年下半年的某一天，如往常般刷公众号，偶然间刷到了一篇学习投资理财的文章，继而发现了这个宝藏app。然后就开始了我的记账之旅。﻿', '2020-04-19 17:47:44');
+INSERT INTO post (userId, text, date) VALUES (6, '总之，记账前脑袋糊糊涂涂，记账后开始清明，开始不乱跟风，看着净资产那栏越来越多真的是会让人感到满足呢。也更有动力去做赚钱这件事呢。', '2020-04-20 14:26:23');
+INSERT INTO post (userId, text, date) VALUES (1, '不知道有没有小伙伴觉得，平日里总觉得自己没怎么用钱，生活里也没什么大的开支，但钱好像总是莫名其妙地就没有了。反正我就是这样的感受。而且我也总觉得自己确实没买啥东西呀，钱就这样没了，像不小心丢了一样。﻿', '2020-04-20 15:27:44');
+INSERT INTO post (userId, text, date) VALUES (7, '记账后，我才发现，原来那些不起眼的小开支，一笔一笔加起来，其实也是一笔不小的钱了。也开始每次看着开支超出自己的想象，就开始想着怎样才能减少开支。', '2020-04-21 16:27:44');
+INSERT INTO post (userId, text, date) VALUES (9, '2017年下半年的某一天，如往常般刷公众号，偶然间刷到了一篇学习投资理财的文章，继而发现了这个宝藏app。然后就开始了我的记账之旅。﻿', '2020-04-21 16:28:01');
+INSERT INTO post (userId, text, date) VALUES (5, '随着疫情消退，复工复产加快，出门消费的人开始多了起来。此刻大家最想做什么呢？当然是来碗白酒加点肉，好好犒劳自己。
+
+                                                  于是“报复性消费”来了，甚至为了刺激大家消费，各地纷纷发出优惠券，可谓是深得民意呀！
+
+                                                  当大家都在“报复性消费”时，对于投资者来说，一个非常好的投资机会应运而生。它就是食品饮料行业，狠抓这个投资机会，离报复性“躺赚”就不远了。
+
+                                                  为什么要狠抓食品饮料行业这个投资机会
+
+                                                  首先，不管在什么情况下，消费都是刚需。尤其是在当前环境下，为了稳经济，国家大力鼓励消费，且消费占GDP的比重日趋增长。
+
+                                                  对于以食品饮料为代表的公司便出现了重大利好。
+
+                                                  另外，食品饮料行业一直是大家公认出牛股最多的一个行业。
+
+                                                  比如，茅台从1999年成立以来上涨超200多倍，双汇上涨68倍，山西汾酒上涨51倍。还有泸州老窖、五粮液、伊利的涨幅均比较靠前。
+
+                                                  由此可见，食品饮料行业可以穿越牛熊，稳健增长，具有长期投资价值。﻿', '2020-04-22 16:28:12');
+INSERT INTO post (userId, text, date) VALUES (15, '这么认为的人有不少，每个人的想法不一样。现如今可能没有比房价让人更感兴趣的话题了。 它就像一个围城，城外的人忐忑不安，城内的人窃窃自喜。
+
+                                                   有人会说，我是刚需我等到房子跌的时候再买不行吗？一是有时候等不起，二，以中国现有的人的消费心理。房价跌的时候呢，你就不会买了。等你想买的时候用不了几天的时间房价又涨到天上去了。是你看着房价跌下去你没有入手，到最后房价又涨上去了。﻿', '2020-04-23 16:30:42');
+INSERT INTO post (userId, text, date) VALUES (3, '相信很多看过理财类入门书籍的人都会知道，这些书里都会提及一个帮助我们打理个人资产的方法，甚至是能够让我们存下钱的方法，那便是记账。甚至毫不夸张的说，不少人的财务混乱，也都是通过记账而慢慢得到了梳理和改善。
+
+                                                  虽然很多人知道记账的重要性，却很难有人真正坚持下去。一切，正如近日某位网友的提问那般：虽然懂得记账的重要性，但是一想到这样或那样琐碎的记账过程就头疼，没法坚持下去。如今科技这么发达，有没有什么能够帮助懒人记账的方法？﻿', '2020-04-23 16:31:16');
+INSERT INTO post (userId, text, date) VALUES (7, '工欲善其事，必先利其器。一款专业的软件，便是我们梳理账户现金流最好的神器，只有不断的利用记账功能，我们未来才能真正的享受记账的过程，到那时，所谓的繁琐，或许是一种享受而非抱怨。﻿', '2020-04-23 16:47:24');
+INSERT INTO post (userId, text, date) VALUES (4, '这个社会上很多人都怕麻烦，甚至是在麻烦之后，大家就会想要去走捷径。举个简单的例子，很多朋友都问过小胖一个问题，想要学英语，但自己就是记不住单词，甚至是对记单词没有兴趣，有没有其它更好的方法？
+
+                                                  大家都知道，想要学会一门语言，单词绝对是基础，而记账也是同样的道理。只有不断的强迫自己和每天消费的流水打交道，让自己熟悉所花出去的每一分钱、每一块钱，这样，我们才能真正意识到钱的重要性。
+﻿', '2020-04-24 16:48:14');
+INSERT INTO post (userId, text, date) VALUES (10, '很多人都听过，如果想要存下钱的话，除了过上节衣缩食的日子之外，记账这一环必不可少。但是，不少人或许也产生了疑问，记账真的可以帮助我们改变财务状况吗？甚至是帮我们存下钱吗？﻿', '2020-04-25 12:00:00');
+INSERT INTO post (userId, text, date) VALUES (5, '当然了，记账只能说是财务梳理的第一步。也就是说，如果光懂得记账，那顶多就是会记录流水而已，对我们的存钱目标是没有丝毫帮助的。﻿', '2020-04-25 17:01:02');
+INSERT INTO post (userId, text, date) VALUES (8, '每天从我苏醒的第一个呼吸起
+                                                  我就必须要至少进账239元
+                                                  这是我活在这个城市的成本﻿', '2020-04-25 17:02:52');
+INSERT INTO post (userId, text, date) VALUES (11, '你有没有遇到这种情况？
+
+
+                                                   五一去旅游，旅游回来回顾花了多少钱怎么都算不清？
+                                                   跟朋友做点小本生意，月结的时候，成本和收入是多少，赚了还是亏了算不清？
+                                                   新房装修，事情多开销满天飞，材料花多少算不清？
+                                                   这些花钱的事情集中到一起，支付宝、微信、银行卡一起用，不好好记录根本算不清！
+
+
+                                                   对于精打细算过日子的小朋友一点有很多问号！
+                                                   “到底怎么办才可以记账不乱，看账清晰？？？？？”﻿', '2020-04-25 17:04:44');
+INSERT INTO post (userId, text, date) VALUES (6, '有些人喜欢先苦后甜，有些人喜欢先甜后苦，当然有些人的生活一直都是甜的（因为有人替你负重前行）你喜欢哪样呢？
+
+
+                                                  我老公喜欢过这样的生活:我才20多岁子就该想吃什么吃什么，想买什么买什么，不会因为价钱原因退缩了，我每个月赚的钱就想挥洒完。可能这也是很多年轻人的心声。
+
+
+                                                  可是谁让他毕业没多久就认识我了呢！谁让他没有人帮他负重前行呢！有买房，有小宝宝要养，还有年迈的父母，你把钱挥洒完了，我们怎么办，所以他的想法被我一棍敲醒。
+
+                                                  我喜欢先苦后甜，其实也没多苦，不外乎就是少买几件衣服，少出去吃几顿饭，少买些没用几次的东西。﻿', '2020-04-26 17:10:24');
+INSERT INTO post (userId, text, date) VALUES (1, '今年有2个美好的愿望，1.希望能进城 2.希望今年能存够5万（还没办酒席呢，没管我老公的钱，他要养车，要负担家里的水电费，还要存彩礼钱）﻿', '2020-04-26 17:47:44');
+INSERT INTO post (userId, text, date) VALUES (4, '信用卡大家都有，卡片的额度也是不一样的，但是每张卡基本上都是有信用卡积分的，一般都是会一年清空一次，所以每年的年底都会有信用卡积分到期，小编除了日常的使用积分之外，用信用卡积分也赚了不少钱，今天就给大家说一下信用卡积分赚钱的几种方法。﻿', '2020-04-27 03:22:15');
+INSERT INTO post (userId, text, date) VALUES (12, '积分可以抵扣日常的话费、流量，还有很多积分可以直接缴纳水电费，但是银行的信用卡商城一般都是直接把信用卡的积分抵扣一半，比如，你买50元的话费，需要自己另外支付25元的人民币，而积分能抵扣的另一半，也是不错的福利了。能换话费的，我一般都会直接换掉，不会留着干别的，毕竟这是真金白银啊。赚钱虽然谈不上，但是偶尔帮朋友冲个话费，还是能换一点现金的，反正现在的话费都便宜了，我平时的稿费有时候也会变成话费，很少给自己充值，一般都是朋友圈发个小广告，95折冲话费，就有人直接来秒掉我手上的积分了。这个赚钱的方法是最方便快捷的。﻿', '2020-04-29 18:47:44');
+INSERT INTO post (userId, text, date) VALUES (7, '5月21天记账加油！﻿', '2020-04-30 11:22:40');
+INSERT INTO post (userId, text, date) VALUES (2, '2019年9月，有一个叫作“副业刚需”的新词流行了起来。你可能不知道和你一起工作的同事搞副业的收入是你工资的几倍。有网友感叹，搞副业已经是30岁后该有的自觉，要有自己的B计划’
+
+副业该不该成刚需，其实没有标准答案，答案应是“因人而异”。事实上，副业的确没必要成为每个人或者大多数人的刚需。对很多人而言，把副业仅仅作为备选项，是最合适的状态对于多数人来说，副业的收入其实都低于主业。从经济收入上来说，副业依然难以与主业抗衡。﻿', '2020-04-30 12:11:51');
+INSERT INTO post (userId, text, date) VALUES (13, '今天与坛友闲聊的时候提起最近亲戚推荐购置的一款减肥神器，叫：不会掉的呼拉圈（简称：抖音神器），相信很多小伙伴们都买过呼拉圈，感觉不会摇的人真的太难了，会摇的人确实漂亮。但我妈打击我说：那某某某天天摇呼拉圈都没效果，说我浪费钱。虽然这个神器至今还没到手，不过，刚瞄了一下快递，也就这几天的事情，期待。﻿', '2020-04-30 19:59:19');
+INSERT INTO post (userId, text, date) VALUES (10, '2020年是一个不平凡的一年，有些人在家里可能会遇到拿最低工资的问题，有些人可能由于一些原因无法正常复工，有些人可能公司倒闭了没有工作，不管是什么样的情况，我们都应该正确地去面对。你觉得家庭多长时间没有收入，会影响正常的生活运转？
+                                                        当我们没有收入的时候，最大的问题是每个月的柴米油盐酱醋茶能否正常负担，毕竟没人可以不吃不喝，然而生活中真正压力最大的是房贷、车贷等等一些借贷，每个月雷打不动的欠款，这才是我们最担心的。骑牛看熊记得一些经济学家说过：“那些有房贷的人，绝大多数人都熬不过6个月。”这就说明了生活十分不容易，一旦我们有了每个月要还款的压力，那么出现没有收入的情况，将会是之前的储蓄在逐渐殆尽的困境。﻿', '2020-05-01 06:32:44');
+INSERT INTO post (userId, text, date) VALUES (6, '前两天跟朋友聊天的时候，我提到了最近的感悟：一个人要是会记账、会理账，她的日子肯定差不到哪里去。
+
+                                                  朋友听我这么说还吐槽：照你这么说，天底下所有的会计都不会穷了？
+
+                                                  我一噎，无语道：我说的这个“记账”和你说的不一样。
+
+                                                  朋友说：不都是记账嘛？有啥区别？
+
+                                                  说到这里，估计很多人都会有同样的疑问，不都是记账吗，怎么可能会有那么大的区别呢？
+
+                                                  其实我这里说的“会记账”不是普通账目中的收入支出记录那种最浅显的一方面，而是会记账、有打理账务的能力。“会记账、会理账”是指记账人能够很清晰的弄清楚自己的财务 状况、不仅会打理当下的财务状况，还会为未来的财务进行合理的规划，最终达到“心中有账”，这是一种理财思维的形成。
+
+                                                  或许会有人说，你这不是记账而是理财吧。
+
+                                                  其实这话也没错，在我的理解中，理财不过是记账的升级版罢了。﻿', '2020-05-01 08:47:56');
+INSERT INTO post (userId, text, date) VALUES (1, '2013年我刚刚从事信贷经理岗位时，曾向一个信贷经验丰富的老信贷经理请教，他给我分享的一条经验令我记忆深刻：如果你遇到对财务状况了解的比较清楚的老板，甚至为了一厘的利息而和你计较半天的人，不仅不要生气你还得感到庆幸，因为你遇到了一个优质客户。
+
+                                                  通常情况下，这种客户大多会“量力而行”，对于企业要走的下一步、资金的分配等都会有详细的规划，对公司的应收账款以及银行贷款都会控制在合理范围内，给这种人办理贷款 出现风险的概率往往会比较小，因为这种人的风险把控的意识大多比较强。
+
+                                                  同理，对家庭财务的管理也如同管理一家公司，如果一个掌握财务的人比较善于记账，往往会对家里的财务状况有着清晰的认识，明白自己家里的钱大概有多少，负债有多少，收入有多少，支出有多少，做到心中有数。
+
+                                                  总之，记账的人会对家里的财务状况有着比较强的把控力，明白什么事情能做，什么事情不能做，对于自己和这个小家未来如何发展大多会有一个目标，不会让它偏离轨道。拥有这种能力的人，大多数情况下，不能说绝对有钱，但生活肯定差不到哪里去。﻿', '2020-05-01 08:54:02');
+INSERT INTO post (userId, text, date) VALUES (3, '一个心里有账的人，总会对自己的资金来往特别敏感，他们总会很快意识到问题并且尽力寻找解决办法。 比如有不少的人巴拉过自己的账本之后发现，自己的收入状况堪忧啊，然后就会想尽办法的寻找其他渠道增加收入，现在社会中不少斜杠青年不都是这么来的吗？
+
+                                                  再则，记账的人往往特别会精打细算，对很多平台的活动几乎了如指掌，然后每个月只是薅羊毛就能够帮我们省不少钱。 话说 “省到就是赚到”，可不就是特别会赚钱吗？
+﻿', '2020-05-01 11:36:47');
+INSERT INTO post (userId, text, date) VALUES (10, '艳子是我最要好的闺蜜兼死党。﻿
+
+                                                   不管是幼儿园、小学、初中、到高中，我们一直是同班同学，无论当初分班多少次，都没把我们之间分开。﻿﻿
+
+                                                   直到后来，我去上大学，艳子学习美容，十几年，我们从未离开过彼此，忽然分开真是有点舍不得。
+
+                                                   我们互相通电话，我给她讲述大学丰富多彩的生活，她告诉我说外面的世界诱惑太多，真是TMD太现实，让我好好珍惜校园生活。﻿﻿
+
+                                                   虽然都不在彼此身边，但一直相互鼓励，各怀梦想并肩作战。﻿﻿
+
+                                                   有一种感情是从未想起，但并不代表忘记，虽然不经常见面，见了面还是那么熟悉。你知道我最糟糕的一面，我了解你心底最脆弱的地方，彼此可以相互吐槽，但从未真的生气。﻿﻿
+
+                                                   我想这种感情就是友情吧。﻿', '2020-05-01 22:37:11');
+INSERT INTO post (userId, text, date) VALUES (6, '上了大学终于获得了初步的经济自由，虽然每月资金固定却可以自由支配。所以毫无理财概念的我，日常生活就是买买买，吃吃吃，浪浪浪。这样做得结果就是直线飙升的体重和比脸都干净的银行卡。﻿﻿﻿', '2020-05-02 00:47:44');
+INSERT INTO post (userId, text, date) VALUES (1, '我们在生活中有没有这样的一种感觉，明明这个东西我用笔记下来了，但是一着急就找不到了。为了能够让自己的笔记看得更清楚一些，买了不同颜色的本子，大大小小，花花绿绿的。
+
+                                                  我家中有很多笔记本。有的本子是用来写读书笔记的，有的写好词好句，还有的本子是用来记理财的等等。但是当你用到一个知识点的时候，你就会发现，我这个东西究竟写在哪里了？完全没有印象，也找不到，需要把所有的本子从头到尾翻一遍，浪费了大量的时间。
+
+                                                  《如何有效整理信息》作者奥野宣之，他认为首先我们要摆脱以前的分门别类记笔记的方法，仅一个笔记本，就可以就可以了，这就是作者的推荐的就是说一元化笔记法。﻿', '2020-05-02 03:22:54');
+INSERT INTO post (userId, text, date) VALUES (15, '如果你用漂亮的记手帐的笔记本，有可能会纠结我这个东西写的好不好，一定要写得特别好，不然的话我就是手上这本就浪费了。而普通笔记本完全不用担心。有时候灵感乍现，你只需要飞快的将所想的内容记下来，不需要一个多么完美，只要你求你忠于自己的想法就可以了。
+
+                                                   作者提出的一元化笔记法也不是随便写的，他是有三个规则，第一个就是一元化，将你所有信息都记录一个笔记本里，方便查找。第二个规则就实序话。简单说就是从头开始按顺序时间，像我们小时候流水账式记日记一样的，我早上吃了什么，中午吃了什么，晚上吃的什么，然后这样你就会找起来比较方便。但是要用日期区别开，奥野宣之他是用六位标签儿记录发记录的比如180609就是2018年6月9日。
+
+                                                   同时还要使用分隔线，在笔记本记录时，是先画上分隔线，想再写点什么的时候，后面再接着写。这个区分隔线你还可以设置成两种，一种是每天和每天之间的分隔，可以用一个横线来代表，如果这一天你有好几个时间段，比如早晨中午晚上记的笔记，我们每项笔记都需要间隔开的话，你可以用波浪线，这样便于以后的查找。
+
+                                                   同时可以在笔记本标注时间年限，我觉得这个按顺序就变成了一个时间轴，从一点继续往下接力，很像现在流行的的区块链原理。', '2020-05-02 05:27:47');
+INSERT INTO post (userId, text, date) VALUES (14, '学会理财，财才理你。大三老学姐了，为以后做准备﻿', '2020-05-03 09:47:44');
+INSERT INTO post (userId, text, date) VALUES (12, '大学生是学习力很强、很有希望的一个群体，理财规划也需要早日了解，早日吸收。
+                                                   学校里几乎没有理财的课程（理财专业的除外），需要大家去寻找适合自己的理财方法，做好理财规划。
+                                                   几年内买房？
+                                                   想做生意，需要多少钱？钱从哪里来？需要多久时间？
+                                                   几年内结婚？需要哪些东西？大概的花费是多少？
+                                                   ......
+                                                   这些都是大学生即将要做的理财规划，可以一个个进行，也可以同时进行。有目标就需要方式方法，具体怎么操作呢？我总结了以下几点，抛砖引玉，供大家参考。﻿', '2020-05-03 10:54:44');
+INSERT INTO post (userId, text, date) VALUES (15, '早期的新东方机构曾涌现了大量的知名讲师，如今分散在国内的各个行业。其中李笑来无疑很有代表性。
+                                                   他起初去新东方当老师的原因很简单，就是想多赚一些钱。他发现只有多排课程才会有更多的课时费，于是思考怎么样才能够让自己的课越来越多？答案不言而喻“成为明星讲师，自己的课被学生喜欢”，这样他课才会被学校安排的高更多。
+﻿', '2020-05-03 23:47:44');
+INSERT INTO post (userId, text, date) VALUES (3, '社会分层是指社会成员、社会群体因社会资源占有不同而产生的层化或差异现象，
+                                                  社会资源是指对人有价值的全部资源的总称
+                                                  而“社会资源”的内容很广泛，以下十种资源最为重要，即生产资料资源、财产或收入资源、市场资源（以上三种属于经济资源）、职业或就业资源、政治权力资源、文化资源、社会关系资源、主观声望资源、公民权利资源，以及人力资源。
+                                                  1949年革命的最主要特征是在中国打碎了传统的阶级体系。这是通过两个重大步骤完成的。第一步是新中国成立初期的土地改革运动，用革命的手段剥夺了地主的土地，把它平分给农民，从此，中国农村中不再具有真正经济意义上的地主阶级。第二步是发生在1956年的社会主义改造。它用“低额利息”赎买的方式，改造了中国的民族资产阶级；将城市中的私营企业先变为“公私合营”的方式，后来又逐步变为国家所有和集体所有两种形式，用渐进革命的方式剥夺了资产者的所有权。
+                                                  而导致阶层分化的具体的四个机制和三个资源是：第一，劳动分工；第二，权威等级；第三，生产资料占有与否；第四，制度分割。
+                                                  组织资源（亦称：权力资源）、经济资源、文化（技术）资源。', '2020-05-04 13:41:09');
+INSERT INTO post (userId, text, date) VALUES (10, '记录平常开销 警示自己勿大手大脚
+                                                   攒点钱 留着护肤做检查
+                                                   成就更好的自己', '2020-05-04 14:22:44');
+INSERT INTO post (userId, text, date) VALUES (6, '去年某月，我忽然之间发现自己很穷。
+                                                  于是重回记账老路，顺便发现了随手记其他可“玩”的操作。
+                                                  于是乎，我开始了参与七日记账赏金赛、七日早起打卡赛，去随手赚赚签到。
+                                                  最后，我拿了五十多块；钱虽不多，但却让我养成了坚持的习惯，我到现在还怀念那种天天早起为了去打卡的日子，并认识到什么叫“揾食艰难”。真是希望疫情赶紧过去，我滚回学校继续这样的生活啊。
+                                                  最后，总结一下我的随手记收入明细：
+                                                  总收入：54.19
+                                                  早起打卡赛：28.12
+                                                  记账赏金赛：16.85
+                                                  随手赚赚：6.5
+                                                  圣诞福利红包：2.72
+                                                  总结经验是：早起打卡赛的赏金较高些', '2020-05-04 16:58:44');
+INSERT INTO post (userId, text, date) VALUES (12, '加油！美好每一天！坚持打卡吖(〃〃)', '2020-05-04 21:01:00');
+INSERT INTO post (userId, text, date) VALUES (1, '没想到有一天我会走上这条路！
+                                                  为啥呢？省钱呗﻿', '2020-05-05 07:47:44');
+INSERT INTO post (userId, text, date) VALUES (14, '“一线城市容不下肉身，二三线城市装不下灵魂”，这是许多大学毕业生的感叹。去哪儿就业？去哪儿安家？这道选择题有点难做。
+
+
+                                                   其实不论你想在哪儿，都要有真本事才行，要成为真正的人才，不是你找工作，而是工作去找你了。
+
+
+                                                   许多二三线城市以各种优惠政策招聘人才，因为他们深深懂得人才强市，一个城市经济想腾飞，首先必有各行各业的高端人才。人才是第一生产力，是第一资源，更是创造价值的主导因素。
+
+
+                                                   比如目前杭州人才落户政策放宽为高技能人才、紧缺职业工种获得高级职业资格证书的人才引进户口迁移政策，就是意味着吸纳顶尖人才及有专业技能的、有真本领、高水平的人才留驻在杭州。
+
+                                                   我查阅了一下紧缺工种目录，包括车工、电工、钳工等工种，不仅仅是高端科技人才，象这些具有高级职称的紧缺工种，只要满足条件同样可以在杭州落户，把人才吸引来布局到各行各业，说明城市的发展是全方位的，哪个行业也不能拖改革发展的后腿。
+
+                                                   象一些二线三线城市人才流失非常严重，大部分人才汇聚在北上广深，所以这些城市在吸引人才政策方面都有大幅度的调整。﻿', '2020-05-05 08:40:52');
+INSERT INTO post (userId, text, date) VALUES (2, '疫情过后，你的生活还是只能靠工资吗？
+                                                  最好看的衣服是身材
+                                                  最好的整容术是减肥
+
+                                                  这个减肥口号是喊了一年又一年，赘肉是在身上繁衍了一代又一代。
+                                                  请为之付诸行动！
+
+                                                  愿《减肥账本》成为你的良师益友。﻿', '2020-05-05 11:47:06');
+INSERT INTO post (userId, text, date) VALUES (10, '今年六月份毕业了，花呗借呗还有将近两千元的欠款，本来可以有自己的积蓄，因为家里给了充足的生活费，而且每个月兼职还可以赚1000多，但是就是各种不够花，各种买买买，这次疫情之下，明白了很多道理，不要太过度消费，而且尽可能的手里有点余钱，即将毕业，出入社会肯定用钱的地方会很多，而且也不好意思向家里要钱了，这时候我们要是借一分花一分慢慢债务会越来越多，所以希望自己通过一些简单的理财知识，通过随手记，慢慢学会积累财富，早日实现财务自由，加油！小白向钱冲﻿', '2020-05-05 11:59:24');
+INSERT INTO post (userId, text, date) VALUES (6, '然后挣钱，养家糊口
+                                                  加油！奥利给！ ', '2020-05-05 12:48:40');
+INSERT INTO post (userId, text, date) VALUES (1, '今天是第一天，不知道疫情什么时候才能过去，最近因为绥芬河的境外输入和哈尔滨的口拍王引起的群体感染又让黑龙江走上了风口浪尖，哈尔滨已经启动二级响应了，看来大学复课遥遥无期了!可能要在家答辩，在家毕业了哈哈哈。
+                                                  哈尔滨这事不过去培训机构也复不了课，虽然国考过了笔试但是说实话这个面试我已经学了太久太久了，真的要吐了，从最开始的四休一早中晚到四休一取消晚课再到现在的三休一，其实培训机构和老师们也会烦哈哈哈。只希望疫情快点过去，我能快点去广东面试，不过还能拿存款溜达一圈准备省考。说实话是因为简历不好才选择的公考，虽然没挂科，但是没过四六级，而且一个证书也没有。好工作肯定不行，只能选择等待面试，也希望面试的9选3能挑中我
+                                                  今天赶上培训放假没有网课，看了我是余欢水的大结局(从男女主第一次见面就站他俩真的在一起了)又在家做了一小天的兼职，做的挺累但是好在皇天不负有心人，每天都是几十块但是今天点子好有意外惊喜整了297.5，这是我第一次兼职一天这么多，正好两个朋友今天北京回大庆，明天请他们吃个饭，也犒劳下自己。
+                                                  其实虽然大学四年存了些钱，但是疫情期间家里不给生活费，也是入不敷出，买点什么都自己花钱，而且虽然年初基金涨势当时赚了三千多，但是前一阵脑子一热就都买进了，现在反而还赔了。
+                                                  看来还是得自己努力，无论是现在的兼职，还是日后的工作，亦或是公考路上的努力，花钱必不可少，但是不努力花再多的钱也会打水漂。最后送给大家一句话，想要去见更大的世界，就要经历更大的风雨，愿你志存高远，也奋进惜福!', '2020-05-05 14:30:44');
+
+
+insert into record values(null, 1, '支出', '餐饮', 6, '2020-03-11', '早餐');
+insert into record values(null, 1, '支出', '娱乐', 100, '2020-03-11', '户外烧烤');
+insert into record values(null, 1, '支出', '餐饮', 25, '2020-03-11', '午饭');
+insert into record values(null, 1, '支出', '交通', 2, '2020-03-11', '换乘地铁');
+insert into record values(null, 1, '支出', '服装', 468, '2020-03-12', 't恤+外套');
+insert into record values(null, 1, '支出', '社交', 90, '2020-03-12', '和亲戚聚餐');
+insert into record values(null, 1, '支出', '其他', 35, '2020-03-13', '其他');
+insert into record values(null, 1, '支出', '购物', 29.9, '2020-03-13', '卫生纸64卷竹浆卷纸本色无芯卷筒手纸批发家用实惠装厕纸加厚纸巾');
+insert into record values(null, 1, '支出', '交通', 4, '2020-03-19', '地铁');
+insert into record values(null, 1, '支出', '餐饮', 20, '2020-03-19', '夜宵');
+insert into record values(null, 1, '支出', '学习', 199, '2020-03-19', '买了网课');
+insert into record values(null, 1, '支出', '社交', 50, '2020-03-20', '和闺蜜聚餐');
+insert into record values(null, 1, '支出', '其他', 100, '2020-03-20', '掉钱了');
+insert into record values(null, 1, '支出', '零食', 38, '2020-03-20', '猫脱酒馆接骨木精酿啤酒');
+insert into record values(null, 1, '支出', '服装', 599, '2020-03-21', '邦威鞋子');
+insert into record values(null, 1, '支出', '交通', 4, '2020-03-21', '早晚公交');
+insert into record values(null, 1, '支出', '服装', 89, '2020-03-22', '短裤');
+insert into record values(null, 1, '支出', '零食', 20, '2020-03-22', 'Lucky Home 台式奶茶冰淇淋');
+insert into record values(null, 1, '支出', '娱乐', 80, '2020-03-22', 'k歌');
+insert into record values(null, 1, '支出', '服装', 288, '2020-03-23', '黑色运动套装');
+insert into record values(null, 1, '支出', '交通', 2, '2020-03-24', '地铁');
+insert into record values(null, 1, '支出', '购物', 19.8, '2020-03-25', 'oppor17钢化膜');
+insert into record values(null, 1, '支出', '交通', 1.5, '2020-03-25', '公交');
+insert into record values(null, 1, '支出', '娱乐', 44, '2020-03-25', '海洋馆半价');
+insert into record values(null, 1, '支出', '零食', 67.7, '2020-03-25', '去附近的超市买了一堆');
+insert into record values(null, 1, '支出', '餐饮', 5, '2020-03-25', '早餐');
+insert into record values(null, 1, '支出', '购物', 499, '2020-03-25', '泰国ZENN镜光镜面唇釉 蜜桃乌龙奶茶色 oneday 604');
+insert into record values(null, 1, '支出', '服装', 99, '2020-03-25', '服装');
+insert into record values(null, 1, '支出', '娱乐', 50, '2020-03-26', '轰趴');
+insert into record values(null, 1, '支出', '交通', 4, '2020-03-26', '早晚公交');
+insert into record values(null, 1, '支出', '娱乐', 20, '2020-03-26', '意式风情区玩');
+insert into record values(null, 1, '支出', '购物', 7.9, '2020-03-26', '抹布吸水不掉毛去油洗碗布家用懒人厨房用品家务清洁洗碗巾擦手巾');
+insert into record values(null, 1, '支出', '零食', 88.9, '2020-03-26', '鸭脖');
+insert into record values(null, 1, '支出', '娱乐', 80, '2020-03-27', '科技馆一日游');
+insert into record values(null, 1, '支出', '通讯', 20, '2020-03-27', '流量包');
+insert into record values(null, 1, '支出', '学习', 289, '2020-03-27', '当当网买书');
+insert into record values(null, 1, '支出', '娱乐', 50, '2020-03-27', 'k歌');
+insert into record values(null, 1, '支出', '还款', 263, '2020-03-27', '花呗');
+insert into record values(null, 1, '支出', '零食', 49, '2020-03-28', '蒜香龙虾尾');
+insert into record values(null, 1, '支出', '还款', 400, '2020-03-28', '上个月借父母');
+insert into record values(null, 1, '支出', '购物', 59.9, '2020-03-28', 'iSense充电款电子称小型体重秤高精度家用人体秤精准耐用家庭称重');
+insert into record values(null, 1, '支出', '医疗', 400, '2020-03-29', '骨折');
+insert into record values(null, 1, '支出', '零食', 16, '2020-03-29', '奶茶');
+insert into record values(null, 1, '支出', '娱乐', 20, '2020-03-29', '网吧一下午');
+insert into record values(null, 1, '支出', '学习', 1000, '2020-03-29', '学费');
+insert into record values(null, 1, '支出', '社交', 80, '2020-03-29', '和班上同学聚餐');
+insert into record values(null, 1, '支出', '医疗', 200, '2020-03-29', '骨折复诊');
+insert into record values(null, 1, '支出', '通讯', 100, '2020-03-30', '话费');
+insert into record values(null, 1, '支出', '学习', 10, '2020-03-30', '一盒笔芯');
+insert into record values(null, 1, '支出', '购物', 59, '2020-03-30', '鞋架子简易门口放');
+insert into record values(null, 1, '支出', '社交', 30, '2020-03-30', '和朋友聚餐');
+insert into record values(null, 1, '收入', '工资', 8000, '2020-03-10', '工资');
+insert into record values(null, 1, '收入', '兼职', 100, '2020-03-11', '周末兼职');
+insert into record values(null, 1, '收入', '兼职', 100, '2020-03-17', '周末兼职');
+insert into record values(null, 1, '收入', '兼职', 100, '2020-03-23', '周末兼职');
+insert into record values(null, 1, '收入', '理财', 25.5, '2020-03-30', '理财');
+insert into record values(null, 1, '收入', '其他', 70.6, '2020-03-11', '福利红包');
+insert into record values(null, 1, '收入', '其他', 20.6, '2020-03-17', '红包');
+insert into record values(null, 1, '收入', '其他', 66.6, '2020-03-22', '红包');
+
+insert into record values(null, 1, '支出', '餐饮', 8, '2020-04-01', '早餐');
+insert into record values(null, 1, '支出', '娱乐', 56, '2020-04-02', '烧烤');
+insert into record values(null, 1, '支出', '餐饮', 20, '2020-04-04', '午饭');
+insert into record values(null, 1, '支出', '交通', 4, '2020-04-05', '换乘地铁');
+insert into record values(null, 1, '支出', '服装', 468, '2020-04-09', '外套');
+insert into record values(null, 1, '支出', '社交', 90, '2020-04-12', '和亲戚聚餐');
+insert into record values(null, 1, '支出', '其他', 35, '2020-04-13', '其他');
+insert into record values(null, 1, '支出', '购物', 29.9, '2020-04-13', '卫生纸64卷竹浆卷纸本色无芯卷筒手纸批发家用实惠装厕纸加厚纸巾');
+insert into record values(null, 1, '支出', '交通', 4, '2020-04-13', '地铁');
+insert into record values(null, 1, '支出', '餐饮', 20, '2020-04-14', '夜宵');
+insert into record values(null, 1, '支出', '学习', 199, '2020-04-14', '买了网课');
+insert into record values(null, 1, '支出', '社交', 50, '2020-04-14', '和闺蜜聚餐');
+insert into record values(null, 1, '支出', '其他', 100, '2020-04-14', '掉钱了');
+insert into record values(null, 1, '支出', '零食', 38, '2020-04-15', '猫脱酒馆接骨木精酿啤酒');
+insert into record values(null, 1, '支出', '服装', 599, '2020-04-15', '邦威鞋子');
+insert into record values(null, 1, '支出', '交通', 4, '2020-04-15', '早晚公交');
+insert into record values(null, 1, '支出', '服装', 89, '2020-04-15', '短裤');
+insert into record values(null, 1, '支出', '零食', 20, '2020-04-16', 'Lucky Home 台式奶茶冰淇淋');
+insert into record values(null, 1, '支出', '娱乐', 80, '2020-04-16', 'k歌');
+insert into record values(null, 1, '支出', '服装', 288, '2020-04-16', '黑色运动套装');
+insert into record values(null, 1, '支出', '交通', 2, '2020-04-17', '地铁');
+insert into record values(null, 1, '支出', '购物', 19.8, '2020-04-17', 'oppor17钢化膜');
+insert into record values(null, 1, '支出', '其他', 100, '2020-04-17', '掉钱了');
+insert into record values(null, 1, '支出', '零食', 38, '2020-04-17', '猫脱酒馆接骨木精酿啤酒');
+insert into record values(null, 1, '支出', '服装', 599, '2020-04-17', '邦威鞋子');
+insert into record values(null, 1, '支出', '交通', 4, '2020-04-18', '早晚公交');
+insert into record values(null, 1, '支出', '交通', 1.5, '2020-04-18', '公交');
+insert into record values(null, 1, '支出', '娱乐', 44, '2020-04-19', '海洋馆半价');
+insert into record values(null, 1, '支出', '零食', 67.7, '2020-04-20', '去附近的超市买了一堆');
+insert into record values(null, 1, '支出', '餐饮', 5, '2020-04-20', '早餐');
+insert into record values(null, 1, '支出', '购物', 499, '2020-04-20', '泰国ZENN镜光镜面唇釉 蜜桃乌龙奶茶色 oneday 604');
+insert into record values(null, 1, '支出', '服装', 99, '2020-04-20', '服装');
+insert into record values(null, 1, '支出', '娱乐', 50, '2020-04-20', '轰趴');
+insert into record values(null, 1, '支出', '零食', 16, '2020-04-20', '奶茶');
+insert into record values(null, 1, '支出', '娱乐', 20, '2020-04-21', '网吧一下午');
+insert into record values(null, 1, '支出', '学习', 1000, '2020-04-22', '学费');
+insert into record values(null, 1, '支出', '社交', 80, '2020-04-22', '和班上同学聚餐');
+insert into record values(null, 1, '支出', '医疗', 200, '2020-04-22', '拿药');
+insert into record values(null, 1, '支出', '通讯', 100, '2020-04-22', '话费');
+insert into record values(null, 1, '支出', '交通', 4, '2020-04-23', '早晚公交');
+insert into record values(null, 1, '支出', '通讯', 20, '2020-04-24', '流量包');
+insert into record values(null, 1, '支出', '学习', 289, '2020-04-25', '当当网买书');
+insert into record values(null, 1, '支出', '娱乐', 50, '2020-04-25', 'k歌');
+insert into record values(null, 1, '支出', '还款', 263, '2020-04-25', '花呗');
+insert into record values(null, 1, '支出', '零食', 49, '2020-04-26', '蒜香龙虾尾');
+insert into record values(null, 1, '支出', '还款', 400, '2020-04-27', '上个月借父母');
+insert into record values(null, 1, '支出', '购物', 59.9, '2020-04-28', 'iSense充电款电子称小型体重秤高精度家用人体秤精准耐用家庭称重');
+insert into record values(null, 1, '支出', '医疗', 100, '2020-04-29', '感冒');
+insert into record values(null, 1, '支出', '零食', 16, '2020-04-29', '奶茶');
+insert into record values(null, 1, '支出', '娱乐', 20, '2020-04-29', '网吧一下午');
+insert into record values(null, 1, '支出', '学习', 1000, '2020-04-29', '学费');
+insert into record values(null, 1, '支出', '社交', 80, '2020-04-29', '和班上同学聚餐');
+insert into record values(null, 1, '支出', '医疗', 100, '2020-04-29', '再次感冒');
+insert into record values(null, 1, '支出', '通讯', 100, '2020-04-30', '话费');
+insert into record values(null, 1, '支出', '学习', 10, '2020-04-30', '一盒笔芯');
+insert into record values(null, 1, '支出', '购物', 59, '2020-04-30', '鞋架子简易门口放');
+insert into record values(null, 1, '支出', '社交', 30, '2020-04-30', '和朋友聚餐');
+insert into record values(null, 1, '收入', '兼职', 50, '2020-04-07', '周末兼职');
+insert into record values(null, 1, '收入', '兼职', 50, '2020-04-14', '周末兼职');
+insert into record values(null, 1, '收入', '兼职', 100, '2020-04-21', '周末兼职');
+insert into record values(null, 1, '收入', '理财', 16.5, '2020-04-30', '理财');
+insert into record values(null, 1, '收入', '其他', 11.1, '2020-04-11', '福利红包');
+insert into record values(null, 1, '收入', '其他', 6.6, '2020-04-17', '红包');
+insert into record values(null, 1, '收入', '其他', 99.9, '2020-04-22', '红包');
+
+insert into record values(null, 1, '支出', '餐饮', 8, '2020-05-01', '早餐');
+insert into record values(null, 1, '支出', '娱乐', 56, '2020-05-01', '烧烤');
+insert into record values(null, 1, '支出', '餐饮', 20, '2020-05-01', '午饭');
+insert into record values(null, 1, '支出', '交通', 8, '2020-05-01', '换乘地铁');
+insert into record values(null, 1, '支出', '服装', 99, '2020-05-01', '外套');
+insert into record values(null, 1, '支出', '社交', 69, '2020-05-02', '和亲戚聚餐');
+insert into record values(null, 1, '支出', '其他', 35, '2020-05-02', '其他');
+insert into record values(null, 1, '支出', '购物', 49.9, '2020-05-02', '卫生纸64卷竹浆卷纸本色无芯卷筒手纸批发家用实惠装厕纸加厚纸巾');
+insert into record values(null, 1, '支出', '交通', 4, '2020-05-02', '地铁');
+insert into record values(null, 1, '支出', '餐饮', 33, '2020-05-02', '夜宵');
+insert into record values(null, 1, '支出', '学习', 229, '2020-05-02', '买了网课');
+insert into record values(null, 1, '支出', '社交', 100, '2020-05-03', '和闺蜜聚餐');
+insert into record values(null, 1, '支出', '其他', 20, '2020-05-03', '掉钱了');
+insert into record values(null, 1, '支出', '零食', 38, '2020-05-03', '猫脱酒馆接骨木精酿啤酒');
+insert into record values(null, 1, '支出', '服装', 88, '2020-05-03', '邦威鞋子');
+insert into record values(null, 1, '支出', '交通', 10, '2020-05-03', '早晚公交');
+insert into record values(null, 1, '支出', '服装', 89, '2020-05-04', '短裤');
+insert into record values(null, 1, '支出', '零食', 20, '2020-05-04', 'Lucky Home 台式奶茶冰淇淋');
+insert into record values(null, 1, '支出', '娱乐', 80, '2020-05-04', 'k歌');
+insert into record values(null, 1, '支出', '服装', 188, '2020-05-04', '黑色运动套装');
+insert into record values(null, 1, '支出', '交通', 20, '2020-05-04', '地铁');
+insert into record values(null, 1, '支出', '购物', 39.8, '2020-05-04', 'oppor17钢化膜');
+insert into record values(null, 1, '支出', '其他', 100, '2020-05-04', '掉钱了');
+insert into record values(null, 1, '支出', '零食', 38, '2020-05-05', '猫脱酒馆接骨木精酿啤酒');
+insert into record values(null, 1, '支出', '服装', 78, '2020-05-05', '邦威鞋子');
+insert into record values(null, 1, '支出', '交通', 57, '2020-05-05', '滴滴');
+insert into record values(null, 1, '支出', '交通', 10, '2020-05-05', '公交');
+insert into record values(null, 1, '支出', '娱乐', 44, '2020-05-05', '海洋馆半价');
+insert into record values(null, 1, '支出', '零食', 67.7, '2020-05-05', '去附近的超市买了一堆');
+insert into record values(null, 1, '支出', '餐饮', 55, '2020-05-05', '小烤肉');
+insert into record values(null, 1, '收入', '兼职', 8000, '2020-05-01', '工资');
+insert into record values(null, 1, '收入', '兼职', 50, '2020-05-02', '五一兼职');
+insert into record values(null, 1, '收入', '兼职', 50, '2020-05-03', '五一兼职');
+insert into record values(null, 1, '收入', '理财', 3.5, '2020-05-01', '理财');
+insert into record values(null, 1, '收入', '其他', 2.1, '2020-05-05', '福利红包');
+
+INSERT INTO budget(userId, month, classify, budget) VALUES (1, '2020-05', '总', 2000);
+INSERT INTO budget(userId, month, classify, budget) VALUES (1, '2020-05', '餐饮', 800);
+INSERT INTO budget(userId, month, classify, budget) VALUES (1, '2020-05', '交通', 200);
+INSERT INTO budget(userId, month, classify, budget) VALUES (1, '2020-05', '服装', 400);
+INSERT INTO budget(userId, month, classify, budget) VALUES (1, '2020-05', '社交', 400);
+INSERT INTO budget(userId, month, classify, budget) VALUES (1, '2020-05', '娱乐', 200);
+
+update custom_count set lastClockDate = '2020-05-05', continuousClockDayNum = 12, totalChargeDayNum = 89, totalChargeNum = 159 where userId = 1;
+
+INSERT INTO custom_collection(userId, postId) VALUES (1, 1);
+INSERT INTO custom_collection(userId, postId) VALUES (1, 10);
+INSERT INTO custom_collection(userId, postId) VALUES (1, 17);
+INSERT INTO custom_collection(userId, postId) VALUES (1, 19);
+INSERT INTO custom_collection(userId, postId) VALUES (1, 22);
+
+INSERT INTO first_comment (userId, postId, text, date) VALUES (3, 1, '说的好！﻿', '2020-04-13 15:47:44');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (4, 1, '我也觉得很有道理﻿', '2020-04-13 18:24:16');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (5, 1, '生活不易，都要加油啊～！﻿', '2020-04-15 22:47:44');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (6, 1, '估计要成为潮流很难。现在我们这很多人都开始摘口罩了。像分餐这样的事更难坚持下去。', '2020-05-01 18:44:24');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (7, 1, '坚持是比较难的﻿', '2020-05-02 18:47:36');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (8, 1, '给自己定一个目标：第一次预算做起来。﻿', '2020-05-03 18:27:04');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (10, 1, '占楼﻿', '2020-05-04 08:47:36');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (9, 1, '顶一个﻿', '2020-05-05 10:27:04');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (14, 10, '占楼﻿﻿', '2020-04-23 15:47:44');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (13, 10, '我也觉得很有道理﻿', '2020-04-23 18:24:16');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (1, 10, '顶一个﻿', '2020-04-25 22:47:44');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (6, 10, '坚持是比较难的', '2020-05-01 18:44:24');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (7, 10, '估计要成为潮流很难。现在我们这很多人都开始摘口罩了。像分餐这样的事更难坚持下去。﻿', '2020-05-02 18:47:36');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (12, 10, '给自己定一个目标：第一次预算做起来。﻿', '2020-05-03 18:27:04');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (5, 10, '说的好！', '2020-05-04 08:47:36');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (15, 10, '生活不易，都要加油啊～！﻿', '2020-05-05 10:27:04');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (12, 11, '占楼﻿﻿', '2020-04-23 18:47:44');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (6, 11, '我也觉得很有道理﻿', '2020-04-23 23:24:16');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (1, 11, '顶一个﻿', '2020-04-25 22:47:44');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (8, 11, '坚持是比较难的', '2020-05-01 18:44:24');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (7, 11, '估计要成为潮流很难。现在我们这很多人都开始摘口罩了。像分餐这样的事更难坚持下去。﻿', '2020-05-02 18:47:36');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (12, 11, '给自己定一个目标：第一次预算做起来。﻿', '2020-05-03 18:27:04');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (5, 11, '说的好！', '2020-05-04 08:47:36');
+INSERT INTO first_comment (userId, postId, text, date) VALUES (11, 11, '生活不易，都要加油啊～！﻿', '2020-05-05 10:27:04');
+

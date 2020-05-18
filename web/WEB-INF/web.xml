@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+
+
+    <servlet>
+        <servlet-name>JDBCManager</servlet-name>
+        <!-- 下面这行是DBManager这个类的定位，“包名”替换为你在前面第4步中创建的包名，区分大小写！！！ -->
+        <servlet-class>JDBCManager</servlet-class>
+        <init-param>
+            <param-name>DBUsername</param-name>
+            <!-- 这里是数据库用户名，一般情况下是root，无需改变 -->
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>DBPassword</param-name>
+            <!-- 下面这两个标签中间写你的数据库密码，如果没设置就什么也别写，空格也不能有 -->
+            <param-value>123456</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ConnectionURL</param-name>
+            <!-- mysql是数据库的名字 -->
+            <!--
+                        <param-value>jdbc:mysql://120.77.221.108:3306/mysql?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;rewriteBatchedStatements=true</param-value>
+            -->
+            <param-value>jdbc:mysql://localhost:3306/custom?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;rewriteBatchedStatements=true</param-value>
+        </init-param>
+        <!-- 下面这行很重要，指示服务器在启动时立即加载这个Servlet -->
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JDBCManager</servlet-name>
+        <url-pattern>/JDBCManager</url-pattern>
+    </servlet-mapping>
+
+
+<!--    <servlet>-->
+<!--        <servlet-name>TestServlet</servlet-name>-->
+<!--        <servlet-class>servlet.TestServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>TestServlet</servlet-name>-->
+<!--        <url-pattern>/TestServlet</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+</web-app>
