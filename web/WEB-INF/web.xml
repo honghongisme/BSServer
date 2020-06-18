@@ -39,13 +39,5 @@
     </servlet-mapping>
 
 
-<!--    <servlet>-->
-<!--        <servlet-name>TestServlet</servlet-name>-->
-<!--        <servlet-class>servlet.TestServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>TestServlet</servlet-name>-->
-<!--        <url-pattern>/TestServlet</url-pattern>-->
-<!--    </servlet-mapping>-->
 
 </web-app>

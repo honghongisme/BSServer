@@ -21,19 +21,17 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 7.0.103" level="application_server_libraries" />
+    <orderEntry type="library" exported="" name="KotlinJavaRuntime" level="project" />
+    <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.19" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/web/WEB-INF/lib" />
+          <root url="jar://D:/apache-tomcat-7.0.94/lib/servlet-api.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/web/WEB-INF/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="KotlinJavaRuntime" level="project" />
-    <orderEntry type="library" exported="" name="com.google.code.gson:gson:2.8.6" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.19" level="project" />
   </component>
 </module>
